@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#f7f5f3"/>
+  <rect x="40" y="40" width="432" height="432" rx="72" fill="#ffffff" stroke="#de7b8e" stroke-width="4"/>
+  <text x="256" y="200" text-anchor="middle" font-family="monospace" font-weight="700" font-size="120" fill="#de7b8e">ぼっち</text>
+  <text x="256" y="340" text-anchor="middle" font-family="monospace" font-weight="700" font-size="100" fill="#2a2430">Todo</text>
+  <rect x="120" y="380" width="272" height="6" rx="3" fill="#de7b8e" opacity="0.3"/>
+  <rect x="120" y="380" width="136" height="6" rx="3" fill="#de7b8e"/>
+</svg>
