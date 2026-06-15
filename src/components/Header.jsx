@@ -6,7 +6,7 @@ export default function Header({ dailyTheme }) {
   return (
     <header className="header">
       <div className="title-row">
-        <h1 className="app-title"><span style={{ color: dailyTheme.color }}>ぼっち</span>Todo</h1>
+        <h1 className="app-title"><span style={{ color: dailyTheme.color }}>波奇</span>Todo</h1>
         <span className="subtitle">今日担当：{dailyTheme.name}</span>
       </div>
       <span className="date-badge">{dateStr}</span>
