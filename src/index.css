@@ -89,12 +89,13 @@ html, body {
 }
 
 .character-img {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--accent);
   vertical-align: middle;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .date-badge {

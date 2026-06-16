@@ -11,19 +11,19 @@ const STORE_KEY = 'bocchitodo:items'
 const DAILY_THEMES = [
   { 
     name: '波奇', color: '#de7b8e', dim: 'rgba(222,123,142,0.10)',
-    images: ['/images/bocchi-1.png', '/images/bocchi-2.png', '/images/bocchi-3.png', '/images/bocchi-4.png']
+    images: ['/bocchi-todo/images/bocchi-1.png', '/bocchi-todo/images/bocchi-2.png', '/bocchi-todo/images/bocchi-3.png', '/bocchi-todo/images/bocchi-4.png']
   },  // 周日/周三 - 粉
   { 
     name: '虹夏', color: '#d4a03c', dim: 'rgba(212,160,60,0.10)',
-    images: ['/images/nijika-1.png', '/images/nijika-2.png', '/images/nijika-3.png', '/images/nijika-4.png']
+    images: ['/bocchi-todo/images/nijika-1.png', '/bocchi-todo/images/nijika-2.png', '/bocchi-todo/images/nijika-3.png', '/bocchi-todo/images/nijika-4.png']
   },   // 周一/周四 - 金
   { 
     name: '凉',   color: '#6889a8', dim: 'rgba(104,137,168,0.10)',
-    images: ['/images/ryou-1.png', '/images/ryou-2.png', '/images/ryou-3.png', '/images/ryou-4.png']
+    images: ['/bocchi-todo/images/ryou-1.png', '/bocchi-todo/images/ryou-2.png', '/bocchi-todo/images/ryou-3.png', '/bocchi-todo/images/ryou-4.png']
   },  // 周二/周五 - 蓝
   { 
     name: '喜多', color: '#c9505e', dim: 'rgba(201,80,94,0.10)',
-    images: ['/images/kita-1.png', '/images/kita-2.png', '/images/kita-3.png', '/images/kita-4.png']
+    images: ['/bocchi-todo/images/kita-1.png', '/bocchi-todo/images/kita-2.png', '/bocchi-todo/images/kita-3.png', '/bocchi-todo/images/kita-4.png']
   },  // 周六 - 红
 ]
 
