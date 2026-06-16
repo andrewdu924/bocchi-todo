@@ -98,6 +98,14 @@ export default function App() {
     saveTodos(todos)
   }, [todos])
 
+  useEffect(() => {
+    const now = new Date()
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+    const msUntilMidnight = tomorrow - now
+    const timer = setTimeout(() => window.location.reload(), msUntilMidnight)
+    return () => clearTimeout(timer)
+  }, [])
+
   const addTodo = useCallback((text, priority) => {
     setTodos((prev) => [
       { id: genId(), text, done: false, priority, ts: Date.now() },
