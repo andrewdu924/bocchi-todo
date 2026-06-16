@@ -5,20 +5,20 @@ export default function Header({ dailyTheme }) {
 
   return (
     <header className="header">
-      <div className="title-row">
+      <div className="header-left">
         <h1 className="app-title"><span style={{ color: dailyTheme.color }}>ボッチ</span>Todo</h1>
-        <span className="subtitle">
-          今日担当：{dailyTheme.name}
-          {dailyTheme.img && (
-            <img 
-              src={dailyTheme.img} 
-              alt={dailyTheme.name} 
-              className="character-img"
-            />
-          )}
-        </span>
+        <span className="subtitle">今日担当：{dailyTheme.name}</span>
+        <span className="date-badge">{dateStr}</span>
       </div>
-      <span className="date-badge">{dateStr}</span>
+      {dailyTheme.img && (
+        <div className="character-avatar">
+          <img 
+            src={dailyTheme.img} 
+            alt={dailyTheme.name} 
+            className="character-img"
+          />
+        </div>
+      )}
     </header>
   )
 }

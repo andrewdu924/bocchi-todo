@@ -55,7 +55,18 @@ html, body {
 }
 
 /* --- 顶部标题区 --- */
-.header { margin-bottom: 28px; }
+.header { 
+  margin-bottom: 28px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
 .ascii-guitar {
   font: 11px/1.25 var(--font-mono);
@@ -83,19 +94,24 @@ html, body {
   font: 12px/1 var(--font-mono);
   color: var(--muted);
   letter-spacing: 0.02em;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+}
+
+.character-avatar {
+  flex-shrink: 0;
 }
 
 .character-img {
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--accent);
-  vertical-align: middle;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border: 3px solid var(--accent);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.character-img:hover {
+  transform: scale(1.1);
 }
 
 .date-badge {

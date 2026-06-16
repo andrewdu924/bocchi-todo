@@ -7,6 +7,44 @@ import EmptyState from './components/EmptyState'
 import StatusBar from './components/StatusBar'
 
 const STORE_KEY = 'bocchitodo:items'
+const DB_NAME = 'bocchi-todo-db'
+const DB_VERSION = 1
+const DB_STORE_NAME = 'todos'
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION)
+    request.onupgradeneeded = (e) => {
+      const db = e.target.result
+      if (!db.objectStoreNames.contains(DB_STORE_NAME)) {
+        db.createObjectStore(DB_STORE_NAME, { keyPath: 'id' })
+      }
+    }
+    request.onsuccess = () => resolve(request.result)
+    request.onerror = () => reject(request.error)
+  })
+}
+
+async function saveToIndexedDB(todos) {
+  const db = await openDB()
+  const tx = db.transaction(DB_STORE_NAME, 'readwrite')
+  const store = tx.objectStore(DB_STORE_NAME)
+  await store.clear()
+  todos.forEach(todo => store.put(todo))
+  await tx.complete
+  db.close()
+}
+
+async function loadFromIndexedDB() {
+  const db = await openDB()
+  const tx = db.transaction(DB_STORE_NAME, 'readonly')
+  const store = tx.objectStore(DB_STORE_NAME)
+  const request = store.getAll()
+  return new Promise((resolve) => {
+    request.onsuccess = () => resolve(request.result || [])
+    request.onerror = () => resolve([])
+  })
+}
 
 const DAILY_THEMES = [
   { 
@@ -83,24 +121,47 @@ function genId() {
 function loadTodos() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORE_KEY))
-    return Array.isArray(saved) ? saved : []
-  } catch {
-    return []
-  }
+    if (Array.isArray(saved) && saved.length > 0) {
+      return saved
+    }
+  } catch { /* localStorage 不可用 */ }
+  return []
 }
 
-function saveTodos(todos) {
+async function loadTodosWithRecovery() {
+  const fromLocal = loadTodos()
+  if (fromLocal.length > 0) {
+    return fromLocal
+  }
+  try {
+    const recovered = await loadFromIndexedDB()
+    if (Array.isArray(recovered) && recovered.length > 0) {
+      localStorage.setItem(STORE_KEY, JSON.stringify(recovered))
+      return recovered
+    }
+  } catch { /* IndexedDB 不可用 */ }
+  return []
+}
+
+async function saveTodos(todos) {
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(todos))
-  } catch { /* storage unavailable */ }
+  } catch { /* localStorage 不可用 */ }
+  try {
+    await saveToIndexedDB(todos)
+  } catch { /* IndexedDB 不可用 */ }
 }
 
 export default function App() {
-  const [todos, setTodos] = useState(loadTodos)
+  const [todos, setTodos] = useState([])
   const [filter, setFilter] = useState('all')
   const [removingIds, setRemovingIds] = useState(new Set())
   const dailyTheme = useMemo(() => getDailyTheme(), [])
   const dailyQuote = useMemo(() => getDailyQuote(), [])
+
+  useEffect(() => {
+    loadTodosWithRecovery().then(setTodos)
+  }, [])
 
   useEffect(() => {
     const root = document.documentElement
