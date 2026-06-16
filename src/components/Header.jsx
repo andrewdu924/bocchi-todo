@@ -24,13 +24,17 @@ export default function Header({ dailyTheme }) {
           )}
         </div>
       </div>
-      {dailyTheme.avatar && (
-        <div className="character-avatar">
-          <img 
-            src={dailyTheme.avatar} 
-            alt={dailyTheme.name} 
-            className="character-img"
-          />
+      {dailyTheme.avatars && dailyTheme.avatars.length > 0 && (
+        <div className="character-avatars">
+          {dailyTheme.avatars.map((avatar, index) => (
+            <img 
+              key={index}
+              src={avatar.src} 
+              alt={avatar.name}
+              className="character-img"
+              style={{ borderColor: avatar.color }}
+            />
+          ))}
         </div>
       )}
     </header>

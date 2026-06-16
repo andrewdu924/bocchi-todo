@@ -72,12 +72,12 @@ function getDailyTheme() {
   
   const theme = DAILY_THEMES[dayOfYear % DAILY_THEMES.length]
   
-  const charIndex = dayOfYear % DAILY_THEMES.length
-  const char = DAILY_THEMES[charIndex]
-  const imgIndex = dayOfYear % char.images.length
-  const avatar = char.images[imgIndex]
+  const avatars = DAILY_THEMES.map((char, i) => {
+    const imgIndex = (dayOfYear + i) % char.images.length
+    return { name: char.name, color: char.color, src: char.images[imgIndex] }
+  })
   
-  return { ...theme, avatar }
+  return { ...theme, avatars }
 }
 
 const DAILY_QUOTES = [
