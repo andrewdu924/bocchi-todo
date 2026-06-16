@@ -49,19 +49,19 @@ async function loadFromIndexedDB() {
 const DAILY_THEMES = [
   { 
     name: '波奇', color: '#de7b8e', dim: 'rgba(222,123,142,0.10)',
-    images: ['/bocchi-todo/images/bocchi-1.png', '/bocchi-todo/images/bocchi-2.png', '/bocchi-todo/images/bocchi-3.png', '/bocchi-todo/images/bocchi-4.png']
+    images: Array.from({length: 10}, (_, i) => `/bocchi-todo/images/bocchi-${i+1}.png`)
   },  // 周日/周三 - 粉
   { 
     name: '虹夏', color: '#d4a03c', dim: 'rgba(212,160,60,0.10)',
-    images: ['/bocchi-todo/images/nijika-1.png', '/bocchi-todo/images/nijika-2.png', '/bocchi-todo/images/nijika-3.png', '/bocchi-todo/images/nijika-4.png']
+    images: Array.from({length: 10}, (_, i) => `/bocchi-todo/images/nijika-${i+1}.png`)
   },   // 周一/周四 - 金
   { 
     name: '凉',   color: '#6889a8', dim: 'rgba(104,137,168,0.10)',
-    images: ['/bocchi-todo/images/ryou-1.png', '/bocchi-todo/images/ryou-2.png', '/bocchi-todo/images/ryou-3.png', '/bocchi-todo/images/ryou-4.png']
+    images: Array.from({length: 10}, (_, i) => `/bocchi-todo/images/ryou-${i+1}.png`)
   },  // 周二/周五 - 蓝
   { 
     name: '喜多', color: '#c9505e', dim: 'rgba(201,80,94,0.10)',
-    images: ['/bocchi-todo/images/kita-1.png', '/bocchi-todo/images/kita-2.png', '/bocchi-todo/images/kita-3.png', '/bocchi-todo/images/kita-4.png']
+    images: Array.from({length: 10}, (_, i) => `/bocchi-todo/images/kita-${i+1}.png`)
   },  // 周六 - 红
 ]
 
@@ -69,9 +69,21 @@ function getDailyTheme() {
   const now = new Date()
   const start = new Date(now.getFullYear(), 0, 0)
   const dayOfYear = Math.floor((now - start) / 86400000)
+  const dayOfWeek = now.getDay()
+  
   const theme = DAILY_THEMES[dayOfYear % DAILY_THEMES.length]
-  const imgIndex = Math.floor(dayOfYear / DAILY_THEMES.length) % theme.images.length
-  return { ...theme, img: theme.images[imgIndex] }
+  
+  const avatarCount = [1, 2, 3, 4, 3, 2, 1][dayOfWeek]
+  
+  const avatars = []
+  for (let i = 0; i < avatarCount; i++) {
+    const charIndex = (dayOfYear + i) % DAILY_THEMES.length
+    const char = DAILY_THEMES[charIndex]
+    const imgIndex = (dayOfYear + i) % char.images.length
+    avatars.push(char.images[imgIndex])
+  }
+  
+  return { ...theme, avatars }
 }
 
 const DAILY_QUOTES = [

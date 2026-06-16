@@ -121,6 +121,21 @@ html, body {
   text-transform: uppercase;
 }
 
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.holiday-countdown {
+  font: 11px/1 var(--font-mono);
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
 /* --- 角色色带 --- */
 .band-stripe {
   display: flex;

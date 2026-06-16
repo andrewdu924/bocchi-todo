@@ -1,22 +1,39 @@
+import { useState, useEffect } from 'react'
+import { getNextHolidayAsync } from '../utils/holiday'
+
 export default function Header({ dailyTheme }) {
+  const [nextHoliday, setNextHoliday] = useState(null)
   const now = new Date()
   const weekdays = ['日', '一', '二', '三', '四', '五', '六']
   const dateStr = `${now.getMonth() + 1}/${now.getDate()} 周${weekdays[now.getDay()]}`
+
+  useEffect(() => {
+    getNextHolidayAsync().then(setNextHoliday)
+  }, [])
 
   return (
     <header className="header">
       <div className="header-left">
         <h1 className="app-title"><span style={{ color: dailyTheme.color }}>ボッチ</span>Todo</h1>
-        <span className="subtitle">今日担当：{dailyTheme.name}</span>
-        <span className="date-badge">{dateStr}</span>
+        <div className="date-row">
+          <span className="date-badge">{dateStr}</span>
+          {nextHoliday && (
+            <span className="holiday-countdown">
+              距{nextHoliday.name}还有{nextHoliday.days}天
+            </span>
+          )}
+        </div>
       </div>
-      {dailyTheme.img && (
-        <div className="character-avatar">
-          <img 
-            src={dailyTheme.img} 
-            alt={dailyTheme.name} 
-            className="character-img"
-          />
+      {dailyTheme.avatars && dailyTheme.avatars.length > 0 && (
+        <div className="character-avatars">
+          {dailyTheme.avatars.map((avatar, index) => (
+            <img 
+              key={index}
+              src={avatar} 
+              alt={`角色${index + 1}`} 
+              className="character-img"
+            />
+          ))}
         </div>
       )}
     </header>
