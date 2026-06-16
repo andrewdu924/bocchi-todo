@@ -7,7 +7,16 @@ export default function Header({ dailyTheme }) {
     <header className="header">
       <div className="title-row">
         <h1 className="app-title"><span style={{ color: dailyTheme.color }}>ボッチ</span>Todo</h1>
-        <span className="subtitle">今日担当：{dailyTheme.name}</span>
+        <span className="subtitle">
+          今日担当：{dailyTheme.name}
+          {dailyTheme.img && (
+            <img 
+              src={dailyTheme.img} 
+              alt={dailyTheme.name} 
+              className="character-img"
+            />
+          )}
+        </span>
       </div>
       <span className="date-badge">{dateStr}</span>
     </header>

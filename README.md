@@ -150,6 +150,35 @@ scope: '/your-repo-name/',
 | 2 | 凉（山田凉） | `#6889a8` 蓝 |
 | 3 | 喜多（喜多郁代） | `#c9505e` 红 |
 
+## 角色图片
+
+每日担当会显示对应角色的头像图片，每4天轮换一次图片（不重复）。请将图片文件放在 `public/images/` 目录下：
+
+```
+public/images/
+├── bocchi-1.png    # 波奇图片1
+├── bocchi-2.png    # 波奇图片2
+├── bocchi-3.png    # 波奇图片3
+├── bocchi-4.png    # 波奇图片4
+├── nijika-1.png    # 虹夏图片1
+├── nijika-2.png    # 虹夏图片2
+├── nijika-3.png    # 虹夏图片3
+├── nijika-4.png    # 虹夏图片4
+├── ryou-1.png      # 凉图片1
+├── ryou-2.png      # 凉图片2
+├── ryou-3.png      # 凉图片3
+├── ryou-4.png      # 凉图片4
+├── kita-1.png      # 喜多图片1
+├── kita-2.png      # 喜多图片2
+├── kita-3.png      # 喜多图片3
+└── kita-4.png      # 喜多图片4
+```
+
+**图片要求**：
+- 格式：PNG（推荐）或 JPG
+- 尺寸：建议 128x128 像素或更大（会自动裁剪为圆形）
+- 文件大小：建议小于 100KB
+
 ## 安全说明
 
 - 纯前端应用，无后端、无 API 调用

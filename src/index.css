@@ -83,6 +83,18 @@ html, body {
   font: 12px/1 var(--font-mono);
   color: var(--muted);
   letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.character-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+  vertical-align: middle;
 }
 
 .date-badge {
