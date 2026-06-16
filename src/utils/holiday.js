@@ -1,29 +1,13 @@
-async function fetchHolidays() {
-  const year = new Date().getFullYear()
-  try {
-    const response = await fetch(`https://timor.tech/api/holiday/year/${year}`)
-    const data = await response.json()
-    if (data.code === 0) {
-      return Object.entries(data.holiday)
-        .filter(([, info]) => info.holiday)
-        .map(([dateStr, info]) => {
-          const [y, m, d] = dateStr.split('-').map(Number)
-          return {
-            name: info.name,
-            date: new Date(y, m - 1, d),
-          }
-        })
-        .sort((a, b) => a.date - b.date)
-    }
-  } catch { /* API 请求失败 */ }
-  return []
-}
+import { Festival } from 'festival_chn'
 
-function getDaysUntil(date) {
+const festival = new Festival()
+
+function getTodayInt() {
   const now = new Date()
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-  const target = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-  return Math.round((target - today) / (1000 * 60 * 60 * 24))
+  const y = now.getFullYear()
+  const m = String(now.getMonth() + 1).padStart(2, '0')
+  const d = String(now.getDate()).padStart(2, '0')
+  return parseInt(`${y}${m}${d}`)
 }
 
 export function getNextHoliday() {
@@ -45,14 +29,24 @@ export async function getNextHolidayAsync() {
   }
   
   try {
-    const holidays = await fetchHolidays()
+    const year = now.getFullYear()
+    const month = now.getMonth() + 1
+    const startDate = parseInt(`${year}${String(month).padStart(2, '0')}01`)
+    const endDate = parseInt(`${year}${String(month).padStart(2, '0')}31`)
+    
+    const holidays = festival.getDaysInRange(startDate, endDate)
+    const todayInt = getTodayInt()
+    
     for (const holiday of holidays) {
-      const diffDays = getDaysUntil(holiday.date)
-      if (diffDays >= 0 && diffDays <= 7) {
-        return { name: holiday.name, days: diffDays }
+      if (holiday.isHoliday && holiday.date > todayInt) {
+        const diffDays = Math.round((holiday.date - todayInt) / 10000) * 365 + 
+                         ((holiday.date % 10000) - (todayInt % 10000)) / 100 * 30
+        if (diffDays <= 7) {
+          return { name: holiday.name || '节假日', days: Math.ceil(diffDays) }
+        }
       }
     }
-  } catch { /* 获取节假日数据失败 */ }
+  } catch { /* 查询失败 */ }
   
   return { name: '周末', days: 6 - dayOfWeek }
 }
