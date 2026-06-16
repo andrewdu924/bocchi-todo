@@ -133,11 +133,13 @@ export default function App() {
     done: doneCount,
   }
 
-  const filtered = todos.filter((t) => {
-    if (filter === 'active') return !t.done
-    if (filter === 'done') return t.done
-    return true
-  })
+  const filtered = todos
+    .filter((t) => {
+      if (filter === 'active') return !t.done
+      if (filter === 'done') return t.done
+      return true
+    })
+    .sort((a, b) => a.done - b.done)
 
   return (
     <>
