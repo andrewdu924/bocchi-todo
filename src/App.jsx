@@ -69,21 +69,15 @@ function getDailyTheme() {
   const now = new Date()
   const start = new Date(now.getFullYear(), 0, 0)
   const dayOfYear = Math.floor((now - start) / 86400000)
-  const dayOfWeek = now.getDay()
   
   const theme = DAILY_THEMES[dayOfYear % DAILY_THEMES.length]
   
-  const avatarCount = [1, 2, 3, 4, 3, 2, 1][dayOfWeek]
+  const charIndex = dayOfYear % DAILY_THEMES.length
+  const char = DAILY_THEMES[charIndex]
+  const imgIndex = dayOfYear % char.images.length
+  const avatar = char.images[imgIndex]
   
-  const avatars = []
-  for (let i = 0; i < avatarCount; i++) {
-    const charIndex = (dayOfYear + i) % DAILY_THEMES.length
-    const char = DAILY_THEMES[charIndex]
-    const imgIndex = (dayOfYear + i) % char.images.length
-    avatars.push(char.images[imgIndex])
-  }
-  
-  return { ...theme, avatars }
+  return { ...theme, avatar }
 }
 
 const DAILY_QUOTES = [
