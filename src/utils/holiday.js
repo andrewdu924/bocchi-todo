@@ -1,6 +1,4 @@
-import { Festival } from 'festival_chn'
-
-const festival = new Festival()
+import festival from 'festival_chn'
 
 function getTodayInt() {
   const now = new Date()
